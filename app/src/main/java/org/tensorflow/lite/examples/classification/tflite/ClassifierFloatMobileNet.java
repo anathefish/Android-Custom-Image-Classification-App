@@ -25,9 +25,9 @@ import org.tensorflow.lite.support.common.ops.NormalizeOp;
 public class ClassifierFloatMobileNet extends Classifier {
 
   /** Float MobileNet requires additional normalization of the used input. */
-  private static final float IMAGE_MEAN = 127.5f;
+  private static final float IMAGE_MEAN = 0f;
 
-  private static final float IMAGE_STD = 127.5f;
+  private static final float IMAGE_STD = 255f;
 
   /**
    * Float model does not need dequantization in the post-processing. Setting mean and std as 0.0f
@@ -52,12 +52,12 @@ public class ClassifierFloatMobileNet extends Classifier {
     // you can download this file from
     // see build.gradle for where to obtain this file. It should be auto
     // downloaded into assets.
-    return "model_unquant.tflite";
+    return "species_model.tflite";
   }
 
   @Override
   protected String getLabelPath() {
-    return "labels.txt";
+    return "species_labels.txt";
   }
 
   @Override
@@ -68,5 +68,15 @@ public class ClassifierFloatMobileNet extends Classifier {
   @Override
   protected TensorOperator getPostprocessNormalizeOp() {
     return new NormalizeOp(PROBABILITY_MEAN, PROBABILITY_STD);
+  }
+
+  @Override
+  protected int getImageSizeX() {
+    return 0;
+  }
+
+  @Override
+  protected int getImageSizeY() {
+    return 0;
   }
 }
