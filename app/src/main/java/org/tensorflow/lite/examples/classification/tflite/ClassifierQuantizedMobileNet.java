@@ -69,4 +69,14 @@ public class ClassifierQuantizedMobileNet extends Classifier {
   protected TensorOperator getPostprocessNormalizeOp() {
     return new NormalizeOp(PROBABILITY_MEAN, PROBABILITY_STD);
   }
+
+  @Override
+  protected int getInputImageHeightIndex() {
+    return 1;
+  }
+
+  @Override
+  protected int getInputImageWidthIndex() {
+    return 2;
+  }
 }
